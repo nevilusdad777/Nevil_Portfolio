@@ -7,13 +7,29 @@ export function useGitHubProjects(username, featuredRepos = []) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const featuredRepoNames = new Set(
+    featuredRepos.map((name) => name.toLowerCase())
+  );
+
+  const getProjectDescription = (repo) => {
+    if (repo.description && repo.description.trim()) {
+      return repo.description.trim();
+    }
+
+    if (repo.topics && repo.topics.length > 0) {
+      return `Built with ${repo.topics.slice(0, 3).join(", ")}.`;
+    }
+
+    return "No description added on GitHub yet.";
+  };
+
   const createFeaturedPlaceholders = (currentUsername, repoNames) => {
     // Use placeholders so the UI can still show "My Work" even when the GitHub API is blocked.
     // (Stars/language/topics are unknown in this fallback.)
     return repoNames.map((name, idx) => ({
       id: `${name}-${idx}`,
       name,
-      description: `GitHub repo: ${name}`,
+      description: `GitHub repo: ${name}. Add a description on GitHub to show project details here.`,
       url: `https://github.com/${currentUsername}/${name}`,
       homepage: null,
       stars: 0,
@@ -42,33 +58,27 @@ export function useGitHubProjects(username, featuredRepos = []) {
           `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`
         );
 
-        // Show all repos from the profile (including forks), so the Work section
-        // reflects what the user sees on GitHub.
-        let repos = data;
+        const publicRepos = data.filter((repo) => !repo.private);
 
-        // If featuredRepos list is provided, filter to only those
-        if (featuredRepos.length > 0) {
-          const featured = repos.filter((r) =>
-            featuredRepos.some(
-              (name) => name.toLowerCase() === r.name.toLowerCase()
-            )
+        // Keep featured repos at the top, but do not hide the rest of the public projects.
+        const repos = publicRepos.sort((a, b) => {
+          const aFeatured = featuredRepoNames.has(a.name.toLowerCase());
+          const bFeatured = featuredRepoNames.has(b.name.toLowerCase());
+
+          if (aFeatured !== bFeatured) {
+            return aFeatured ? -1 : 1;
+          }
+
+          return (
+            b.stargazers_count - a.stargazers_count ||
+            new Date(b.updated_at) - new Date(a.updated_at)
           );
-          // Fallback: if none matched, show top 6 by stars
-          repos =
-            featured.length > 0
-              ? featured
-              : repos.sort((a, b) => b.stargazers_count - a.stargazers_count).slice(0, 6);
-        } else {
-          repos = repos
-            .sort((a, b) => b.stargazers_count - a.stargazers_count)
-            .slice(0, 6);
-        }
+        });
 
-        // Normalize shape
         const normalized = repos.map((r) => ({
           id: r.id,
           name: r.name,
-          description: r.description || "No description provided.",
+          description: getProjectDescription(r),
           url: r.html_url,
           homepage: r.homepage,
           stars: r.stargazers_count,
@@ -77,12 +87,12 @@ export function useGitHubProjects(username, featuredRepos = []) {
           topics: r.topics || [],
         }));
 
-        // If the API returned no repos, fall back to showing only featured repos.
         if (normalized.length === 0 && featuredRepos.length > 0) {
           setProjects(createFeaturedPlaceholders(username, featuredRepos));
           setError(null);
         } else {
           setProjects(normalized);
+          setError(null);
         }
       } catch {
         // If GitHub API fails (rate limit / blocked), show only featured repos.
@@ -98,7 +108,7 @@ export function useGitHubProjects(username, featuredRepos = []) {
     };
 
     fetchProjects();
-  }, [username]);
+  }, [username, featuredRepos]);
 
   return { projects, loading, error };
 }
