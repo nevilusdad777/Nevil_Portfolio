@@ -1,0 +1,83 @@
+/* ============================================================
+   variables.css — Design tokens for the entire portfolio
+   ============================================================ */
+
+:root {
+  /* Colors — Dark Mode (default) */
+  --bg-primary: #07070f;
+  --bg-secondary: #0d0d1a;
+  --bg-surface: #12121f;
+  --bg-card: rgba(18, 18, 31, 0.85);
+  --border-color: rgba(108, 99, 255, 0.15);
+
+  --color-primary: #6c63ff;
+  --color-primary-glow: rgba(108, 99, 255, 0.25);
+  --color-accent: #00d4ff;
+  --color-accent-glow: rgba(0, 212, 255, 0.2);
+  --color-success: #00e5a0;
+
+  --text-primary: #f0f0ff;
+  --text-secondary: #9898bb;
+  --text-muted: #5a5a7a;
+
+  --gradient-primary: linear-gradient(135deg, #6c63ff 0%, #00d4ff 100%);
+  --gradient-hero: radial-gradient(ellipse at 20% 50%, rgba(108, 99, 255, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 60%);
+
+  /* Typography */
+  --font-heading: "Inter", sans-serif;
+  --font-mono: "Fira Code", monospace;
+  --font-body: "Inter", sans-serif;
+
+  /* Sizing & Spacing */
+  --section-padding: 100px 0;
+  --container-max: 1200px;
+  --container-pad: 0 24px;
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-primary: 0 0 40px rgba(108, 99, 255, 0.3);
+  --shadow-accent: 0 0 40px rgba(0, 212, 255, 0.2);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 350ms;
+  --duration-slow: 600ms;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(18, 18, 31, 0.7);
+  --glass-border: 1px solid rgba(108, 99, 255, 0.2);
+  --glass-blur: blur(20px);
+
+  /* Z-index scale */
+  --z-navbar: 1000;
+  --z-modal: 2000;
+  --z-tooltip: 3000;
+}
+
+/* Light Mode overrides */
+[data-theme="light"] {
+  --bg-primary: #f5f5ff;
+  --bg-secondary: #eeeeff;
+  --bg-surface: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --border-color: rgba(108, 99, 255, 0.2);
+
+  --text-primary: #0f0f1a;
+  --text-secondary: #4a4a6a;
+  --text-muted: #9090b0;
+
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: 1px solid rgba(108, 99, 255, 0.2);
+
+  --shadow-card: 0 8px 32px rgba(108, 99, 255, 0.1);
+  --gradient-hero: radial-gradient(ellipse at 20% 50%, rgba(108, 99, 255, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(0, 212, 255, 0.06) 0%, transparent 60%);
+}

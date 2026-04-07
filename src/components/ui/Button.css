@@ -1,0 +1,83 @@
+/* Button.css */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  transition: opacity var(--duration-fast) ease;
+  border-radius: inherit;
+}
+
+.btn:hover::after {
+  opacity: 0.06;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Primary */
+.btn--primary {
+  background: var(--gradient-primary);
+  background-size: 200% 200%;
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(108, 99, 255, 0.4);
+}
+
+.btn--primary:hover {
+  box-shadow: 0 8px 32px rgba(108, 99, 255, 0.6);
+  transform: translateY(-2px);
+  animation: gradientShift 2s ease infinite;
+}
+
+/* Outline */
+.btn--outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+}
+
+.btn--outline:hover {
+  background: rgba(108, 99, 255, 0.1);
+  box-shadow: 0 0 20px rgba(108, 99, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Ghost */
+.btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn--ghost:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Accent */
+.btn--accent {
+  background: linear-gradient(135deg, #00d4ff 0%, #00e5a0 100%);
+  color: #07070f;
+  font-weight: 700;
+}
+
+.btn--accent:hover {
+  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.4);
+  transform: translateY(-2px);
+}

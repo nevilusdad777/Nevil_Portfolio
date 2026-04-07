@@ -1,0 +1,39 @@
+/* Skeleton.css — Loading placeholder animations */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--bg-secondary) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-card {
+  background: var(--bg-card);
+  border: var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+}
+
+.skeleton-line--title { height: 22px; width: 70%; }
+.skeleton-line--text  { height: 12px; width: 100%; }
+.skeleton-line--short { height: 12px; width: 50%; }
+.skeleton-line--tag   { height: 24px; width: 60px; border-radius: 999px; display: inline-block; }
+
+.skeleton-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
