@@ -100,9 +100,7 @@ export function Navbar() {
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
             >
-              <span />
-              <span />
-              <span />
+              {menuOpen ? <FiX /> : <FiMenu />}
             </button>
           </div>
         </div>
