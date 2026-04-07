@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { SectionTitle } from "../ui/SectionTitle";
 import { config } from "../../config/portfolio.config";
+import { useGitHubRepoCount } from "../../hooks/useGitHubRepoCount";
 import "./About.css";
 
 const TRAITS = [
@@ -31,6 +32,8 @@ const fadeLeft  = { hidden: { opacity: 0, x: -40 }, show: { opacity: 1, x: 0, tr
 const fadeRight = { hidden: { opacity: 0, x: 40  }, show: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } } };
 
 export function About() {
+  const { count } = useGitHubRepoCount(config.githubUsername);
+
   return (
     <section id="about" className="section about">
       <div className="container">
@@ -63,7 +66,9 @@ export function About() {
             <div className="about__stats">
               {config.about.stats.map(({ label, value }) => (
                 <div className="about__stat" key={label}>
-                  <span className="about__stat-value">{value}</span>
+                  <span className="about__stat-value">
+                    {label === "Projects Built" && count > 0 ? `${count}+` : value}
+                  </span>
                   <span className="about__stat-label">{label}</span>
                 </div>
               ))}

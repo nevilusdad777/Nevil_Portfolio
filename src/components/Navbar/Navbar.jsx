@@ -92,15 +92,18 @@ export function Navbar() {
             </button>
 
             {/* Hamburger — mobile only */}
-            <div
+            <button
+              type="button"
               className={`navbar__hamburger${menuOpen ? " navbar__hamburger--open" : ""}`}
               onClick={() => setMenuOpen((v) => !v)}
               aria-label="Menu"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
             >
               <span />
               <span />
               <span />
-            </div>
+            </button>
           </div>
         </div>
       </motion.nav>
@@ -109,6 +112,7 @@ export function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            id="mobile-navigation"
             className="navbar__mobile"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
